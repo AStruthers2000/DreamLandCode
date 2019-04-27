@@ -6,40 +6,43 @@ public class GameObject {
     private Rectangle item;
     private Color objectColor;
 
-    String getType(){
+    String getType() {
         return this.type;
     }
 
-    void setType(String type){
+    void setType(String type) {
         this.type = type;
     }
 
-    Rectangle getItem(){
+    Rectangle getItem() {
         return this.item;
     }
 
-    void setItem(Rectangle item){
+    void setItem(Rectangle item) {
         this.item = item;
     }
 
-    Color getObjectColor(){
+    Color getObjectColor() {
         return this.objectColor;
     }
 
-    void setObjectColor(Color objectColor){
+    void setObjectColor(Color objectColor) {
         this.objectColor = objectColor;
     }
 
-    Rectangle getUpBound(){
+    Rectangle getUpBound() {
         return new Rectangle(getItem().x, getItem().y - 200, getItem().width, 200);
     }
-    Rectangle getDownBound(){
+
+    Rectangle getDownBound() {
         return new Rectangle(getItem().x, getItem().y + getItem().height, getItem().width, 200);
     }
-    Rectangle getLeftBound(){
+
+    Rectangle getLeftBound() {
         return new Rectangle(getItem().x - 100, getItem().y, 100, getItem().height);
     }
-    Rectangle getRightBound(){
+
+    Rectangle getRightBound() {
         return new Rectangle(getItem().x + getItem().width, getItem().y, 100, getItem().height);
     }
 
@@ -54,19 +57,20 @@ public class GameObject {
 
         return new Rectangle(newX, newY, newWidth, newHeight);
     }
-    double getAreaOfIntersection(Rectangle bound, Rectangle playerBody){
+
+    double getAreaOfIntersection(Rectangle bound, Rectangle playerBody) {
         return Objects.requireNonNull(intersection(bound, playerBody)).width * Objects.requireNonNull(intersection(bound, playerBody)).height;
     }
 
-    public String toString(){
+    public String toString() {
         return "GameObject: " + getType();
     }
 }
 
-class Ladder extends GameObject{
+class Ladder extends GameObject {
     private int y;
 
-    Ladder(int x, int y, int height){
+    Ladder(int x, int y, int height) {
         super.setType("ladder");
 
         int x1 = x;
@@ -81,7 +85,7 @@ class Ladder extends GameObject{
 
 }
 
-class Platform extends GameObject{
+class Platform extends GameObject {
     int x, y, width, height;
 
     Platform(int x, int y, int width) {
@@ -98,10 +102,10 @@ class Platform extends GameObject{
     }
 }
 
-class Door extends GameObject{
+class Door extends GameObject {
     int x, y, width, height;
 
-    Door(int x, int y){
+    Door(int x, int y) {
         super.setType("door");
 
         this.x = x;
@@ -115,10 +119,10 @@ class Door extends GameObject{
     }
 }
 
-class Coin extends GameObject{
+class Coin extends GameObject {
     int x, y, width, height;
 
-    Coin(int x, int y){
+    Coin(int x, int y) {
         super.setType("coin");
 
         this.x = x;

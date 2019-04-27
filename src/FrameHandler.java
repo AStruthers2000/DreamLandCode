@@ -30,7 +30,7 @@ public class FrameHandler extends JPanel {
     }
 
     private Screen whereToGo() {
-        if(whatScreen.equalsIgnoreCase("game")){
+        if (whatScreen.equalsIgnoreCase("game")) {
             curLevel = new Level(new LevelHandler().generateLevel(worldName, levelName));
         }
         return screenList.get(whatScreen);
@@ -95,25 +95,25 @@ public class FrameHandler extends JPanel {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){
-                    if(DreamLand.game.getPlayer().getOnLadder()) {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if(e.getKeyCode() == KeyEvent.VK_UP) {
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
                     if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(-DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     DreamLand.game.getPlayer().setXa(-DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingLeftSide(false);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     DreamLand.game.getPlayer().setXa(DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingRightSide(false);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     DreamLand.game.getPlayer().setJumping(true);
                 }
             }
@@ -122,19 +122,19 @@ public class FrameHandler extends JPanel {
             public void keyReleased(KeyEvent e) {
                 DreamLand.game.getPlayer().setHittingRightSide(false);
                 DreamLand.game.getPlayer().setHittingLeftSide(false);
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     DreamLand.game.getPlayer().setYa(0);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_UP){
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
                     DreamLand.game.getPlayer().setYa(0);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     DreamLand.game.getPlayer().setXa(0);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     DreamLand.game.getPlayer().setXa(0);
                 }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     DreamLand.game.getPlayer().setJumping(false);
                 }
             }

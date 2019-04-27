@@ -7,7 +7,7 @@ public class Level {
     private Player player;
     private List<GameObject> gameObjectList;
 
-    Level(List<GameObject> gameObjects){
+    Level(List<GameObject> gameObjects) {
         this.player = DreamLand.game.getPlayer();
         this.gameObjectList = gameObjects;
     }
@@ -20,10 +20,10 @@ public class Level {
         this.gameObjectList = gameObjectList;
     }
 
-    void drawLevel(Graphics2D graphics){
+    void drawLevel(Graphics2D graphics) {
         player = DreamLand.game.getPlayer();
 
-        for(GameObject object : gameObjectList){
+        for (GameObject object : gameObjectList) {
             graphics.setColor(object.getObjectColor());
             graphics.fillRect(object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height);
 
@@ -46,12 +46,12 @@ public class Level {
 
     private List<GameObject> toDelete = new ArrayList<>();
 
-    void objectDelete(GameObject object){
-        while(true){
-            try{
+    void objectDelete(GameObject object) {
+        while (true) {
+            try {
                 toDelete.add(object);
                 break;
-            }catch(ConcurrentModificationException e){
+            } catch (ConcurrentModificationException e) {
                 System.out.println("Concurrent");
             }
         }

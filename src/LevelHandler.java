@@ -8,11 +8,11 @@ public class LevelHandler {
     private List<GameObject> gameObjectList = new ArrayList<>();
     private Map<String, List<String>> worldNames = new HashMap<>();
 
-    LevelHandler(){
+    LevelHandler() {
         generateWorldNames();
     }
 
-    private void generateWorldNames(){
+    private void generateWorldNames() {
         String path = System.getProperty("user.dir") + "\\Worlds\\";
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
@@ -34,19 +34,19 @@ public class LevelHandler {
                     worldNames.put(dir.getName(), levelsInWorld);
                 }
             }
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Can't get levels");
-        }catch (ArrayIndexOutOfBoundsException e1){
+        } catch (ArrayIndexOutOfBoundsException e1) {
             System.out.println("IDK bruh");
         }
         System.out.println(worldNames);
     }
 
-    Map<String, List<String>> getWorldNames(){
+    Map<String, List<String>> getWorldNames() {
         return this.worldNames;
     }
 
-    List<GameObject> generateLevel(String world, String level){
+    List<GameObject> generateLevel(String world, String level) {
         String longPathName = "";
         try {
             longPathName = System.getProperty("user.dir") + "\\Worlds\\" + world + "\\" + level + ".txt";
@@ -55,15 +55,15 @@ public class LevelHandler {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String line;
-            while(!((line=bufferedReader.readLine()) == null)){
-                if(!line.startsWith("#")){
+            while (!((line = bufferedReader.readLine()) == null)) {
+                if (!line.startsWith("#")) {
                     String type = line.split(" ")[0];
                     int x = Integer.parseInt(line.split(" ")[1]);
                     int y = Integer.parseInt(line.split(" ")[2]);
                     int width = Integer.parseInt(line.split(" ")[3]);
                     int height = Integer.parseInt(line.split(" ")[4]);
 
-                    switch (type){
+                    switch (type) {
                         case "platform":
                             gameObjectList.add(new Platform(x, y, width));
                             break;
@@ -83,7 +83,7 @@ public class LevelHandler {
                 }
             }
 
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Can't find level file: " + longPathName + " must not exist");
         } catch (IOException e) {
             System.out.println("Can't read line in file: " + longPathName);

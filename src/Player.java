@@ -184,16 +184,16 @@ public class Player {
                     double leftInter = 0.0;
                     double rightInter = 0.0;
 
-                    if(getBody().intersects(object.getUpBound())){
+                    if (getBody().intersects(object.getUpBound())) {
                         upInter = object.getAreaOfIntersection(object.getUpBound(), getBody());
                     }
-                    if(getBody().intersects(object.getDownBound())){
+                    if (getBody().intersects(object.getDownBound())) {
                         downInter = object.getAreaOfIntersection(object.getDownBound(), getBody());
                     }
-                    if(getBody().intersects(object.getLeftBound())){
+                    if (getBody().intersects(object.getLeftBound())) {
                         leftInter = object.getAreaOfIntersection(object.getLeftBound(), getBody());
                     }
-                    if(getBody().intersects(object.getRightBound())){
+                    if (getBody().intersects(object.getRightBound())) {
                         rightInter = object.getAreaOfIntersection(object.getRightBound(), getBody());
                     }
 
@@ -202,30 +202,30 @@ public class Player {
 
                     double maxVal = Math.max(maxHoriz, maxVert);
 
-                    int up = (int)upInter;
-                    int down = (int)downInter;
-                    int left = (int)leftInter;
-                    int right = (int)rightInter;
-                    int max = (int)maxVal;
+                    int up = (int) upInter;
+                    int down = (int) downInter;
+                    int left = (int) leftInter;
+                    int right = (int) rightInter;
+                    int max = (int) maxVal;
 
-                    if(max == up){
+                    if (max == up) {
                         this.y = object.getItem().y - sizeY;
                         this.onPlatform = true;
                         this.gravity = 2;
-                    }else if(max == down){
+                    } else if (max == down) {
                         this.y = object.getItem().y + object.getItem().height;
                         isJumping = false;
                         canJump = false;
                         this.gravity = 2;
-                    }else if(max == right){
+                    } else if (max == right) {
                         this.x = object.getItem().x + object.getItem().width;
                         this.hittingLeftSide = false;
                         this.hittingRightSide = true;
-                    }else if(max == left){
+                    } else if (max == left) {
                         this.x = object.getItem().x - this.sizeX;
                         this.hittingLeftSide = true;
                         this.hittingRightSide = false;
-                    }else{
+                    } else {
                         System.out.println("What the fuck");
                     }
                 }
