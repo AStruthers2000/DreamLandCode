@@ -6,13 +6,14 @@ import java.util.Map;
 
 public class LevelHandler {
     private List<GameObject> gameObjectList = new ArrayList<>();
-    private Map<String, List<String>> worldNames = new HashMap<>();
+    private Map<String, List<String>> worlds = generateWorldNames();
 
     LevelHandler() {
-        generateWorldNames();
     }
 
-    private void generateWorldNames() {
+    private Map<String, List<String>> generateWorldNames() {
+        Map<String, List<String>> worldNames = new HashMap<>();
+
         String path = System.getProperty("user.dir") + "\\Worlds\\";
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
@@ -40,10 +41,11 @@ public class LevelHandler {
             System.out.println("IDK bruh");
         }
         System.out.println(worldNames);
+        return worldNames;
     }
 
     Map<String, List<String>> getWorldNames() {
-        return this.worldNames;
+        return this.worlds;
     }
 
     List<GameObject> generateLevel(String world, String level) {

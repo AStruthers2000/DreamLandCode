@@ -38,6 +38,7 @@ public class Player {
     private int levelNum;
 
     Player() {
+        DreamLand.game.setPlayer(this);
         this.init();
     }
 
@@ -174,7 +175,7 @@ public class Player {
         for (GameObject object : gameObjectList) {
             if (object.getType().equalsIgnoreCase("platform")) {
                 if (nextBody.intersects(object.getItem())) {
-                    canJump = true;
+                    //canJump = true;
                     currentlyOnPlatform = true;
                 }
 
@@ -211,6 +212,7 @@ public class Player {
                     if (max == up) {
                         this.y = object.getItem().y - sizeY;
                         this.onPlatform = true;
+                        this.canJump = true;
                         this.gravity = 2;
                     } else if (max == down) {
                         this.y = object.getItem().y + object.getItem().height;
@@ -221,10 +223,12 @@ public class Player {
                         this.x = object.getItem().x + object.getItem().width;
                         this.hittingLeftSide = false;
                         this.hittingRightSide = true;
+                        this.onPlatform = false;
                     } else if (max == left) {
                         this.x = object.getItem().x - this.sizeX;
                         this.hittingLeftSide = true;
                         this.hittingRightSide = false;
+                        this.onPlatform = false;
                     } else {
                         System.out.println("What the fuck");
                     }
@@ -238,7 +242,6 @@ public class Player {
                     this.gravity = 2;
                     this.onLadder = true;
                     this.canJump = true;
-
                 }
             } //ladder
 
@@ -248,6 +251,30 @@ public class Player {
                     currentLevel.objectDelete(object);
                 }
             } //coin
+
+            if(object.getType().equalsIgnoreCase("door")){
+                if(getBody().intersects(object.getItem())){
+                    this.coins += this.coinsOnLevel;
+                    this.coinsOnLevel = 0;
+                    this.levelNum += 1;
+
+                    StringBuilder worldName = new StringBuilder("World");
+                    if(this.worldNum >= 0){
+                        worldName.append(this.worldNum);
+                    }else{
+                        worldName.append("Tutorial");
+                    }
+                    System.out.println(worldName.toString());
+
+                    System.out.println(DreamLand.game.getWorldNames());
+                    if(this.levelNum > DreamLand.game.getWorldNames().get(worldName.toString()).size()){
+                        System.out.println("Moving to next level!");
+                        this.worldNum += 1;
+                        this.levelNum = 0;
+                        //TODO in between world screen change
+                    }
+                }
+            }
         }
 
         if (!currentlyOnPlatform) {
