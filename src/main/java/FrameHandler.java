@@ -1,3 +1,6 @@
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,6 +19,8 @@ public class FrameHandler extends JPanel {
     private Level curLevel;
     private String worldName = "world0";
     private String levelName = "level0";
+    private ControllerInputHandler controllerInputHandler;
+    private ControllerState curState;
 
     protected JFrame getFrame() {
         return this.frame;
@@ -78,6 +83,8 @@ public class FrameHandler extends JPanel {
         whatScreen = "game";
         isScreenChanged = true;
 
+        Thread controllerInputHandlerThread = new Thread(ControllerInputHandler::new);
+
         frame = new JFrame("DreamLand");
         frame.add(this);
         frame.setSize(DreamLand.game.getScreenX(), DreamLand.game.getScreenY());
@@ -87,6 +94,9 @@ public class FrameHandler extends JPanel {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
+        ControllerManager controller = new ControllerManager();
+        controller.initSDLGamepad();
+
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -95,25 +105,25 @@ public class FrameHandler extends JPanel {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN || curState.leftStickY <= -0.5) {
                     if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                if (e.getKeyCode() == KeyEvent.VK_UP || curState.leftStickY >= 0.5) {
                     if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(-DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT || curState.leftStickX <= -0.5) {
                     DreamLand.game.getPlayer().setXa(-DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingLeftSide(false);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT || curState.leftStickX >= 0.5) {
                     DreamLand.game.getPlayer().setXa(DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingRightSide(false);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE || curState.a) {
                     DreamLand.game.getPlayer().setJumping(true);
                 }
             }
@@ -142,7 +152,23 @@ public class FrameHandler extends JPanel {
 
         frame.setVisible(true);
 
+        controllerInputHandlerThread.start();
+
         while (true) {
+            curState = controller.getState(0);
+            if(curState.isConnected){
+                ControllerInputHandler.setControllerState(curState);
+            }
+            //System.out.println(Thread.activeCount());
+            //controllerInputHandlerThread.setControllerState(curState);
+            //System.out.println(curState.isConnected);
+            //System.out.println(curState.y);
+            //System.out.println(curState.x);
+            //System.out.println(curState.a);
+            //System.out.println(curState.b);
+            //System.out.println(curState.leftStickMagnitude);
+            //System.out.println(curState.leftStickAngle);
+
             frame.repaint();
             try {
                 Thread.sleep(10);
