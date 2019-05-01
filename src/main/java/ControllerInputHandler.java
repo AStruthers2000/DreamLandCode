@@ -56,8 +56,7 @@ public class ControllerInputHandler {
                     DreamLand.game.getPlayer().setJumping(false);
                 }
                 Thread.sleep(10);
-            } catch (NullPointerException e) {
-                System.out.println("No state for controller set");
+            } catch (NullPointerException ignored) {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
