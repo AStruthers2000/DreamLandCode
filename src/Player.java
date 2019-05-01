@@ -236,7 +236,7 @@ public class Player {
             } //platform
 
             if (object.getType().equalsIgnoreCase("ladder")) {
-                if (nextBody.intersects(object.getItem())) {
+                if (getBody().intersects(object.getItem())) {
                     currentlyOnLadder = true;
                     this.y += this.ya;
                     this.gravity = 2;
