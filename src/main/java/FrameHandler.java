@@ -5,83 +5,131 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 public class FrameHandler extends JPanel {
 
     private JFrame frame;
 
-    private boolean isScreenChanged;
-    private HashMap<String, Screen> screenList;
-    private Screen currentScreen;
+    //private boolean isScreenChanged;
+    private Screen mainscreen;
     private String whatScreen;
 
-    private Level curLevel;
-    private String worldName = "world0";
-    private String levelName = "level0";
-    private ControllerInputHandler controllerInputHandler;
+    private boolean click;
+
     private ControllerState curState;
 
     protected JFrame getFrame() {
         return this.frame;
     } //getFrame
 
-    private void getScreens() {
-        screenList.put("pause", new PauseScreen());
-        screenList.put("home", new HomeScreen());
-        screenList.put("game", new GameScreen());
-        screenList.put("upgrade", new UpgradeScreen());
-        screenList.put("world", new WorldScreen());
+    void setWhatScreen(String screen){
+        this.whatScreen = screen;
     }
-
-    private Screen whereToGo() {
-        if (whatScreen.equalsIgnoreCase("game")) {
-            curLevel = new Level(new LevelHandler().generateLevel(worldName, levelName));
-        }
-        return screenList.get(whatScreen);
-    } //whereToGo
 
     public void paint(Graphics g) {
         super.paint(g);
         this.setBackground(Color.BLACK);
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //this.graphics = graphics;
         graphics.setColor(Color.WHITE);
 
-        if (isScreenChanged) {
+        /*if (isScreenChanged) {
             isScreenChanged = false;
-            currentScreen = whereToGo();
-        }
-        currentScreen.setGraphics(graphics);
-        currentScreen.setPlayer(DreamLand.game.getPlayer());
+            loadLevel();
+        }*/
 
-        switch (whatScreen) {
-            case "game":
-                ((GameScreen) currentScreen).drawScreen(curLevel);
-                break;
-            case "home":
-                ((HomeScreen) currentScreen).drawScreen();
-                break;
-            case "pause":
-                ((PauseScreen) currentScreen).drawScreen();
-                break;
-            case "upgrade":
-                ((UpgradeScreen) currentScreen).drawScreen();
-                break;
-            case "world":
-                ((WorldScreen) currentScreen).drawScreen();
-                break;
-            default:
-                break;
-        }
+        mainscreen.setGraphics(graphics);
+        mainscreen.setPlayer(DreamLand.game.getPlayer());
+        //mainscreen.setCurLevel(curLevel);
+        mainscreen.setWhatScreen(whatScreen);
+
+        mainscreen.drawScreen();
 
     } //Paint
 
+    private void mouseState(){
+        int mouseX = MouseInfo.getPointerInfo().getLocation().x;
+        int mouseY = MouseInfo.getPointerInfo().getLocation().y;
+
+        Point mouse = new Point(mouseX, mouseY);
+
+        boolean onButton = false;
+        String lastButton = "";
+
+        HashMap<String, Rectangle> boxes = mainscreen.getHomeScreenBoxes();
+        for(String homeScreenButton : boxes.keySet()){
+            Rectangle box = boxes.get(homeScreenButton);
+
+            if(box.contains(mouse)){
+                onButton = true;
+                lastButton = homeScreenButton;
+
+                if(click){
+                    System.out.println(homeScreenButton );
+                    click = false;
+
+                    switch (homeScreenButton){
+                        case "New Game":
+                            System.out.println("Creating new game!!!");
+                            break;
+                        case "Start":
+                            System.out.println("Starting game!");
+                            whatScreen = "game";
+                            break;
+                        case "Worlds":
+                            System.out.println("Going to worlds screen!");
+                            whatScreen = "world";
+                            break;
+                        case "Store":
+                            System.out.println("Going to upgrade screen!");
+                            whatScreen = "upgrade";
+                            break;
+                        case "Settings":
+                            System.out.println("Displaying settings");
+                            whatScreen = "settings";
+                            break;
+                        case "Credits":
+                            System.out.println("Displaying credits");
+                            whatScreen = "credits";
+                            break;
+                        case "Controls":
+                            System.out.println("Displaying controls");
+                            whatScreen = "controls";
+                            break;
+                        case "Exit":
+                            System.out.println("Exiting");
+                            int quit = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
+                            if(quit == 0){
+                                System.exit(0);
+                            }
+                            break;
+                        default:
+                            System.out.println("Uhhhhh");
+                            break;
+                    }
+                }
+            }
+        }
+
+        if(onButton){
+            mainscreen.setCurrentlyOn(lastButton);
+        }else{
+            mainscreen.setCurrentlyOn("");
+        }
+
+
+        //System.out.println(mouse);
+    }
+
     FrameHandler() {
-        screenList = new HashMap<>();
-        getScreens();
-        whatScreen = "game";
-        isScreenChanged = true;
+        mainscreen = new Screen();
+        //getScreens();
+        whatScreen = "home";
+        //isScreenChanged = true;
 
         Thread controllerInputHandlerThread = new Thread(ControllerInputHandler::new);
 
@@ -105,26 +153,33 @@ public class FrameHandler extends JPanel {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_DOWN || curState.leftStickY <= -0.5) {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if (e.getKeyCode() == KeyEvent.VK_UP || curState.leftStickY >= 0.5) {
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
                     if (DreamLand.game.getPlayer().getOnLadder()) {
                         DreamLand.game.getPlayer().setYa(-DreamLand.game.getPlayer().getSpeed());
                     }
                 }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT || curState.leftStickX <= -0.5) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     DreamLand.game.getPlayer().setXa(-DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingLeftSide(false);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT || curState.leftStickX >= 0.5) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     DreamLand.game.getPlayer().setXa(DreamLand.game.getPlayer().getSpeed());
                     DreamLand.game.getPlayer().setHittingRightSide(false);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE || curState.a) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     DreamLand.game.getPlayer().setJumping(true);
+                }
+                if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    if(whatScreen.equalsIgnoreCase("game")){
+                        setWhatScreen("pause");
+                    }else if(whatScreen.equalsIgnoreCase("pause")){
+                        setWhatScreen("game");
+                    }
                 }
             }
 
@@ -149,10 +204,38 @@ public class FrameHandler extends JPanel {
                 }
             }
         });
+        frame.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                click = true;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         frame.setVisible(true);
 
-        controllerInputHandlerThread.start();
+        if(controller.getState(0).isConnected) {
+            controllerInputHandlerThread.start();
+            System.out.println("Controller Connected");
+        }
 
         while (true) {
             curState = controller.getState(0);
@@ -170,8 +253,10 @@ public class FrameHandler extends JPanel {
             //System.out.println(curState.leftStickAngle);
 
             frame.repaint();
+            mouseState();
             try {
                 Thread.sleep(10);
+
             } catch (InterruptedException e) {
                 System.out.println("This has never happened");
                 System.exit(1);

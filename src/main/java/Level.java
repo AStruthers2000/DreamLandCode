@@ -38,8 +38,8 @@ public class Level {
 
         player.move(this, getGameObjectList());
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height);
-        //graphics.drawImage(player.getCurrentFrame(), player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height, null);
+        //graphics.fillRect(player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height);
+        graphics.drawImage(player.getCurrentFrame(), player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height, null);
 
         gameObjectList.removeAll(toDelete);
     }

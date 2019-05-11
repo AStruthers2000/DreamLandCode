@@ -46,8 +46,8 @@ public class Player {
         this.sizeX = 50;
         this.sizeY = 100;
 
-        this.x = 10;
-        this.y = DreamLand.game.getScreenY() - 200;
+        this.x = 0;
+        this.y = 725;
 
         this.xa = 0;
         this.ya = 0;
@@ -62,7 +62,7 @@ public class Player {
 
         //TODO get artwork and frames set up
         this.frames = getFrames();
-        this.frame = 0;
+        this.frame = 2;
 
         this.jumpRaise = 0;
         this.isJumping = false;
@@ -77,7 +77,7 @@ public class Player {
         this.coins = 0;
         this.coinsOnLevel = 0;
 
-        this.worldNum = -1;
+        this.worldNum = 0;
         this.levelNum = 0;
     }
 
@@ -139,6 +139,14 @@ public class Player {
 
     void setJumping(boolean jumping) {
         this.isJumping = jumping;
+    }
+
+    int getWorldNum(){
+        return this.worldNum;
+    }
+
+    int getLevelNum(){
+        return this.levelNum;
     }
 
     void acceptMovement() {
@@ -273,6 +281,7 @@ public class Player {
                         this.levelNum = 0;
                         //TODO in between world screen change
                     }
+                    DreamLand.game.loadLevel();
                 }
             }
         }

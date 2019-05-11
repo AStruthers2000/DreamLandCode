@@ -67,16 +67,19 @@ public class LevelHandler {
 
                     switch (type) {
                         case "platform":
-                            gameObjectList.add(new Platform(x, y, width));
+                            gameObjectList.add(new Platform(x, y, width, height));
+                            break;
+                        case "floor":
+                            gameObjectList.add(new Floor(x, y, width, height));
                             break;
                         case "ladder":
-                            gameObjectList.add(new Ladder(x, y, height));
+                            gameObjectList.add(new Ladder(x, y, width, height));
                             break;
                         case "door":
-                            gameObjectList.add(new Door(x, y));
+                            gameObjectList.add(new Door(x, y, width, height));
                             break;
                         case "coin":
-                            gameObjectList.add(new Coin(x, y));
+                            gameObjectList.add(new Coin(x, y, width, height));
                             break;
                         default:
                             System.out.println("Cant find type: " + type);

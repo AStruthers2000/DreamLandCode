@@ -68,17 +68,17 @@ public class GameObject {
 }
 
 class Ladder extends GameObject {
-    private int y;
+    private int x, y, width, height;
 
-    Ladder(int x, int y, int height) {
+    Ladder(int x, int y, int width, int height) {
         super.setType("ladder");
 
-        int x1 = x;
+        this.x = x;
         this.y = y;
-        int width = 50;
-        int height1 = height;
+        this.width = width;
+        this.height= height;
 
-        Rectangle ladder = new Rectangle(x1, this.y, width, height1);
+        Rectangle ladder = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(ladder);
         super.setObjectColor(Color.BLUE);
     }
@@ -88,30 +88,45 @@ class Ladder extends GameObject {
 class Platform extends GameObject {
     int x, y, width, height;
 
-    Platform(int x, int y, int width) {
+    Platform(int x, int y, int width, int height) {
         super.setType("platform");
 
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = 50;
-
+        this.height = height;
         Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(platform);
         super.setObjectColor(Color.ORANGE);
     }
 }
 
+class Floor extends GameObject{
+    int x, y, width, height;
+
+    Floor(int x, int y, int width, int height) {
+        super.setType("platform");
+
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
+        super.setItem(platform);
+        super.setObjectColor(Color.GRAY);
+    }
+}
+
 class Door extends GameObject {
     int x, y, width, height;
 
-    Door(int x, int y) {
+    Door(int x, int y, int width, int height) {
         super.setType("door");
 
         this.x = x;
         this.y = y;
-        this.width = 100;
-        this.height = 200;
+        this.width = width;
+        this.height = height;
 
         Rectangle door = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(door);
@@ -122,13 +137,13 @@ class Door extends GameObject {
 class Coin extends GameObject {
     int x, y, width, height;
 
-    Coin(int x, int y) {
+    Coin(int x, int y, int width, int height) {
         super.setType("coin");
 
         this.x = x;
         this.y = y;
-        this.width = 25;
-        this.height = 25;
+        this.width = width;
+        this.height = height;
 
         Rectangle coin = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(coin);

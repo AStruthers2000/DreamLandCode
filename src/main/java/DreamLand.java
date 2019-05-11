@@ -41,6 +41,17 @@ public class DreamLand {
         return this.screenY;
     }
 
+    Level loadLevel(){
+        int worldNum = player.getWorldNum();
+        int levelNum = player.getLevelNum();
+
+        String worldName = "world" + worldNum;
+        String levelName = "level" + levelNum;
+
+        return new Level(levelHandler.generateLevel(worldName, levelName));
+        //System.out.println(curLevel);
+    }
+
     private DreamLand() {
         System.out.println("Thank you for playing my game! - Andrew");
 
