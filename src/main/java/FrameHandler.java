@@ -125,10 +125,13 @@ public class FrameHandler extends JPanel {
         //System.out.println(mouse);
     }
 
-    FrameHandler() {
+    //******************************************************************************************************************
+    FrameHandler() { //CONSTRUCTOR
         mainscreen = new Screen();
         //getScreens();
-        whatScreen = "home";
+        //**************************************************************************************************************
+        whatScreen = "game"; //change to game for testing game
+        //**************************************************************************************************************
         //isScreenChanged = true;
 
         Thread controllerInputHandlerThread = new Thread(ControllerInputHandler::new);

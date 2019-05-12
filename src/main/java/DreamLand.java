@@ -45,7 +45,12 @@ public class DreamLand {
         int worldNum = player.getWorldNum();
         int levelNum = player.getLevelNum();
 
-        String worldName = "world" + worldNum;
+        String worldName = "";
+        if(worldNum == -1){
+            worldName = "worldTutorial";
+        }else {
+            worldName = "world" + worldNum;
+        }
         String levelName = "level" + levelNum;
 
         return new Level(levelHandler.generateLevel(worldName, levelName));
