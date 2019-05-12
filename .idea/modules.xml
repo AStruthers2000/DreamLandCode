@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DreamLand.iml" filepath="$PROJECT_DIR$/.idea/DreamLand.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DreamLand_Game.iml" filepath="$PROJECT_DIR$/.idea/modules/DreamLand_Game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DreamLand_Game_main.iml" filepath="$PROJECT_DIR$/.idea/modules/DreamLand_Game_main.iml" group="DreamLand_Game" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DreamLand_Game_test.iml" filepath="$PROJECT_DIR$/.idea/modules/DreamLand_Game_test.iml" group="DreamLand_Game" />
     </modules>
   </component>
 </project>

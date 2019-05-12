@@ -53,9 +53,6 @@ public class DreamLand {
         }
         String levelName = "level" + levelNum;
 
-        System.out.println(worldName);
-        System.out.println(levelName);
-
         return new Level(levelHandler.generateLevel(worldName, levelName)).getGameObjectList();
         //System.out.println(curLevel);
     }

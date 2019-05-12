@@ -64,13 +64,10 @@ public class Screen {
 
     void drawGame() {
         if (curLevel == null) {
-            //System.out.println("level is null you hoe");
-            System.out.println("Yo");
+            System.out.println("level is null you hoe");
 
             int worldNum = player.getWorldNum();
             int levelNum = player.getLevelNum();
-
-            System.out.println("Thefuck?");
 
             String worldName;
             if (worldNum == -1) {
@@ -80,12 +77,7 @@ public class Screen {
             }
             String levelName = "level" + levelNum;
 
-            System.out.println(worldName);
-            System.out.println(levelName);
-
             setCurLevel(new Level(DreamLand.game.getLevelHandler().generateLevel(worldName, levelName)));
-
-            System.out.println("Dumb");
         }
         Graphics2D graphics = getGraphics();
         curLevel.drawLevel(graphics);

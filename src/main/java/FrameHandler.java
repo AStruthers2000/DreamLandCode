@@ -130,7 +130,7 @@ public class FrameHandler extends JPanel {
         mainscreen = new Screen();
         //getScreens();
         //**************************************************************************************************************
-        whatScreen = "game"; //change to game for testing game
+        whatScreen = "home"; //change to game for testing game
         //**************************************************************************************************************
         //isScreenChanged = true;
 

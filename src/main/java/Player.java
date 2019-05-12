@@ -152,12 +152,10 @@ public class Player {
     }
 
     int getWorldNum(){
-        System.out.println("getting world num");
         return this.worldNum;
     }
 
     int getLevelNum(){
-        System.out.println("getting level num");
         return this.levelNum;
     }
 
