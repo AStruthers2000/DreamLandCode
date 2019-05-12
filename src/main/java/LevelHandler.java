@@ -11,6 +11,14 @@ public class LevelHandler {
     LevelHandler() {
     }
 
+    List<GameObject> getGameObjectList(){
+        return this.gameObjectList;
+    }
+
+    void setGameObjectList(List<GameObject> gameObjectList){
+        this.gameObjectList = gameObjectList;
+    }
+
     private Map<String, List<String>> generateWorldNames() {
         Map<String, List<String>> worldNames = new HashMap<>();
 
@@ -49,6 +57,8 @@ public class LevelHandler {
     }
 
     List<GameObject> generateLevel(String world, String level) {
+        gameObjectList = new ArrayList<>();
+
         String longPathName = "";
         try {
             longPathName = System.getProperty("user.dir") + "\\Worlds\\" + world + "\\" + level + ".txt";
@@ -66,6 +76,10 @@ public class LevelHandler {
                     int height = Integer.parseInt(line.split(" ")[4]);
 
                     switch (type) {
+                        case "player":
+                            DreamLand.game.getPlayer().setX(x);
+                            DreamLand.game.getPlayer().setY(y);
+                            break;
                         case "platform":
                             gameObjectList.add(new Platform(x, y, width, height));
                             break;

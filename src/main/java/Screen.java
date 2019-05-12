@@ -66,7 +66,12 @@ public class Screen {
     void drawGame() {
         if(curLevel == null){
             System.out.println("level is null you hoe");
-            setCurLevel(DreamLand.game.loadLevel());
+            int worldNum = player.getWorldNum();
+            int levelNum = player.getLevelNum();
+
+            String worldName = "world" + worldNum;
+            String levelName = "level" + levelNum;
+            setCurLevel(new Level(DreamLand.game.getLevelHandler().generateLevel(worldName, levelName)));
         }
         Graphics2D graphics = getGraphics();
         curLevel.drawLevel(graphics);

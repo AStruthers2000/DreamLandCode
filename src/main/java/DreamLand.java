@@ -41,7 +41,7 @@ public class DreamLand {
         return this.screenY;
     }
 
-    Level loadLevel(){
+    List<GameObject> loadLevel(){
         int worldNum = player.getWorldNum();
         int levelNum = player.getLevelNum();
 
@@ -53,7 +53,7 @@ public class DreamLand {
         }
         String levelName = "level" + levelNum;
 
-        return new Level(levelHandler.generateLevel(worldName, levelName));
+        return new Level(levelHandler.generateLevel(worldName, levelName)).getGameObjectList();
         //System.out.println(curLevel);
     }
 

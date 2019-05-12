@@ -47,7 +47,7 @@ public class Player {
         this.sizeY = 100;
 
         this.x = 0;
-        this.y = 725;
+        this.y = 0;
 
         this.xa = 0;
         this.ya = 0;
@@ -105,6 +105,14 @@ public class Player {
 
     BufferedImage getCurrentFrame() {
         return frames[frame];
+    }
+
+    void setX(int x){
+        this.x = x;
+    }
+
+    void setY(int y){
+        this.y = y;
     }
 
     void setXa(int xa) {
@@ -283,7 +291,8 @@ public class Player {
                         this.levelNum = 0;
                         //TODO in between world screen change
                     }
-                    DreamLand.game.loadLevel();
+                    //DreamLand.game.getLevelHandler().setGameObjectList(DreamLand.game.loadLevel().getGameObjectList());
+                    currentLevel.setGameObjectList(DreamLand.game.loadLevel());
                 }
             }
         }
