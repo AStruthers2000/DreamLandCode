@@ -1,4 +1,5 @@
 #type x y width height
+player 0 725 0 0
 platform 0 825 225 25
 platform 325 825 200 25
 platform 600 750 200 25
