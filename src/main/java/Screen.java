@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Screen {
@@ -64,17 +63,33 @@ public class Screen {
     }
 
     void drawGame() {
-        if(curLevel == null){
-            System.out.println("level is null you hoe");
+        if (curLevel == null) {
+            //System.out.println("level is null you hoe");
+            System.out.println("Yo");
+
             int worldNum = player.getWorldNum();
             int levelNum = player.getLevelNum();
 
-            String worldName = "world" + worldNum;
+            System.out.println("Thefuck?");
+
+            String worldName;
+            if (worldNum == -1) {
+                worldName = "worldTutorial";
+            } else {
+                worldName = "world" + worldNum;
+            }
             String levelName = "level" + levelNum;
+
+            System.out.println(worldName);
+            System.out.println(levelName);
+
             setCurLevel(new Level(DreamLand.game.getLevelHandler().generateLevel(worldName, levelName)));
+
+            System.out.println("Dumb");
         }
         Graphics2D graphics = getGraphics();
         curLevel.drawLevel(graphics);
+
     }
 
 

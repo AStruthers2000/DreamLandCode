@@ -52,7 +52,7 @@ public class Level {
                 toDelete.add(object);
                 break;
             } catch (ConcurrentModificationException e) {
-                System.out.println("Concurrent");
+                System.out.println("Concurrent in Level.java");
             }
         }
     }
