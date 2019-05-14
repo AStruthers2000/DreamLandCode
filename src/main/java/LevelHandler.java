@@ -75,25 +75,32 @@ public class LevelHandler {
                     int width = Integer.parseInt(line.split(" ")[3]);
                     int height = Integer.parseInt(line.split(" ")[4]);
 
+                    String imagePath;
+                    try{
+                        imagePath = line.split(" ")[5];
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        imagePath = type;
+                    }
+
                     switch (type) {
                         case "player":
                             DreamLand.game.getPlayer().setX(x);
                             DreamLand.game.getPlayer().setY(y);
                             break;
                         case "platform":
-                            gameObjectList.add(new Platform(x, y, width, height));
+                            gameObjectList.add(new Platform(x, y, width, height, imagePath));
                             break;
                         case "floor":
-                            gameObjectList.add(new Floor(x, y, width, height));
+                            gameObjectList.add(new Floor(x, y, width, height, imagePath));
                             break;
                         case "ladder":
-                            gameObjectList.add(new Ladder(x, y, width, height));
+                            gameObjectList.add(new Ladder(x, y, width, height, imagePath));
                             break;
                         case "door":
-                            gameObjectList.add(new Door(x, y, width, height));
+                            gameObjectList.add(new Door(x, y, width, height, imagePath));
                             break;
                         case "coin":
-                            gameObjectList.add(new Coin(x, y, width, height));
+                            gameObjectList.add(new Coin(x, y, width, height,imagePath));
                             break;
                         default:
                             System.out.println("Cant find type: " + type);

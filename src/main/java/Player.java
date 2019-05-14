@@ -37,6 +37,10 @@ public class Player {
     private int worldNum;
     private int levelNum;
 
+    //*****UI Images
+    BufferedImage coin;
+    BufferedImage heart;
+
     Player() {
         DreamLand.game.setPlayer(this);
         this.init();
@@ -81,6 +85,8 @@ public class Player {
         this.worldNum = -1;
         this.levelNum = 0;
         //**************************************************************************************************************
+
+        loadImages();
     }
 
     private BufferedImage[] getFrames() {
@@ -101,6 +107,19 @@ public class Player {
             }
         }
         return images;
+    }
+
+    private void loadImages(){
+        String curDir = System.getProperty("user.dir") + "\\Sprites\\PlayerSprites\\UI\\";
+        //System.out.println(curDir);
+
+        try {
+            coin = ImageIO.read(new File(curDir + "coin.png"));
+            heart = ImageIO.read(new File(curDir + "heart.png"));
+        }catch (IOException e){
+            System.out.println("Can't load: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     BufferedImage getCurrentFrame() {
@@ -304,5 +323,40 @@ public class Player {
             onLadder = false;
         }
         acceptMovement();
+    }
+
+    void drawPlayerUI(Level currentLevel, Graphics2D graphics){
+        int screenX = DreamLand.game.getScreenX();
+        int screenY = DreamLand.game.getScreenY();
+
+        int midScreenX = DreamLand.game.getScreenX()/2;
+        int midScreenY = DreamLand.game.getScreenY()/2;
+
+        graphics.setColor(Color.RED);
+
+        graphics.drawRect(0,0,400,100); //Health and coins button
+
+        graphics.drawRect(screenX - 401, 0, 400, 100); //World and level name button
+
+        graphics.drawRect(0, screenY - 101, 200, 100); //Story so far button
+
+        graphics.drawRect(screenX - 401, screenY - 101, 400, 100); //Percent complete button
+
+        graphics.drawImage(coin, x, y - 30, 20, 20, null); //Coins on level counter TODO change to drawImage of coinImage
+
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("verdana", Font.ITALIC, 40));
+
+        graphics.drawImage(heart, 30, 25, 50, 50, null); //heart image
+        graphics.drawString(String.valueOf("x " + health), 100, 65); //total health
+
+        graphics.drawImage(coin, 205, 25, 50, 50, null); //coin image
+        graphics.drawString(String.valueOf("x " + coins), 275, 65); //total coins
+
+        graphics.drawString(String.valueOf(coinsOnLevel + "/" + (currentLevel.countAllCoinsOnLevel() + coinsOnLevel) + " coins collected"), screenX - 500, screenY - 40);
+
+        graphics.setFont(new Font("verdana", Font.PLAIN, 20));
+        graphics.drawString(String.valueOf("x " + coinsOnLevel), x + 25, y - 12); //CoinsOnLevel string
+
     }
 }

@@ -10,8 +10,16 @@ platform 475 425 100 25
 platform 275 250 200 25
 ladder 750 475 50 275
 ladder 475 250 50 175
-coin 925 425 25 25
-coin 275 200 25 25
+coin 925 425 25 25 coin.png
+coin 275 200 25 25 coin.png
+coin 950 425 25 25 coin.png
+coin 975 400 25 25 coin.png
+coin 1000 425 25 25 coin.png
+coin 1025 400 25 25 coin.png
+coin 1050 425 25 25 coin.png
+coin 1075 400 25 25 coin.png
+coin 1100 425 25 25 coin.png
+coin 1150 400 25 25 coin.png
 door 1250 300 75 125
 floor -100 0 100 850
 floor 0 -100 1325 100

@@ -1,10 +1,16 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class GameObject {
     private String type;
     private Rectangle item;
     private Color objectColor;
+    private BufferedImage objectImage;
+    private String fullPath = System.getProperty("user.dir") + "\\Sprites\\LevelSprites\\";
 
     String getType() {
         return this.type;
@@ -28,6 +34,18 @@ public class GameObject {
 
     void setObjectColor(Color objectColor) {
         this.objectColor = objectColor;
+    }
+
+    BufferedImage getObjectImage(){
+        return this.objectImage;
+    }
+
+    void setObjectImage(BufferedImage objectImage){
+        this.objectImage = objectImage;
+    }
+
+    String getFullPath(){
+        return this.fullPath;
     }
 
     Rectangle getUpBound() {
@@ -70,7 +88,7 @@ public class GameObject {
 class Ladder extends GameObject {
     private int x, y, width, height;
 
-    Ladder(int x, int y, int width, int height) {
+    Ladder(int x, int y, int width, int height, String imagePath) {
         super.setType("ladder");
 
         this.x = x;
@@ -81,6 +99,14 @@ class Ladder extends GameObject {
         Rectangle ladder = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(ladder);
         super.setObjectColor(Color.BLUE);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
+            super.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load file: " + imagePath);
+            super.setObjectImage(null);
+        }
     }
 
 }
@@ -88,7 +114,7 @@ class Ladder extends GameObject {
 class Platform extends GameObject {
     int x, y, width, height;
 
-    Platform(int x, int y, int width, int height) {
+    Platform(int x, int y, int width, int height, String imagePath) {
         super.setType("platform");
 
         this.x = x;
@@ -98,13 +124,21 @@ class Platform extends GameObject {
         Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(platform);
         super.setObjectColor(Color.ORANGE);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
+            super.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load file: " + imagePath);
+            super.setObjectImage(null);
+        }
     }
 }
 
 class Floor extends GameObject{
     int x, y, width, height;
 
-    Floor(int x, int y, int width, int height) {
+    Floor(int x, int y, int width, int height, String imagePath) {
         super.setType("platform");
 
         this.x = x;
@@ -114,13 +148,21 @@ class Floor extends GameObject{
         Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(platform);
         super.setObjectColor(Color.GRAY);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
+            super.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load file: " + imagePath);
+            super.setObjectImage(null);
+        }
     }
 }
 
 class Door extends GameObject {
     int x, y, width, height;
 
-    Door(int x, int y, int width, int height) {
+    Door(int x, int y, int width, int height, String imagePath) {
         super.setType("door");
 
         this.x = x;
@@ -131,13 +173,21 @@ class Door extends GameObject {
         Rectangle door = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(door);
         super.setObjectColor(Color.CYAN);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
+            super.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load file: " + imagePath);
+            super.setObjectImage(null);
+        }
     }
 }
 
 class Coin extends GameObject {
     int x, y, width, height;
 
-    Coin(int x, int y, int width, int height) {
+    Coin(int x, int y, int width, int height, String imagePath) {
         super.setType("coin");
 
         this.x = x;
@@ -148,7 +198,13 @@ class Coin extends GameObject {
         Rectangle coin = new Rectangle(this.x, this.y, this.width, this.height);
         super.setItem(coin);
         super.setObjectColor(Color.YELLOW);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
+            super.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load file: " + imagePath);
+            super.setObjectImage(null);
+        }
     }
-
-
 }

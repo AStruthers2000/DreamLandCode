@@ -24,8 +24,13 @@ public class Level {
         player = DreamLand.game.getPlayer();
 
         for (GameObject object : gameObjectList) {
-            graphics.setColor(object.getObjectColor());
-            graphics.fillRect(object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height);
+            if (object.getObjectImage() == null) {
+                graphics.setColor(object.getObjectColor());
+                graphics.fillRect(object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height);
+            } else {
+                graphics.drawImage(object.getObjectImage(), object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height, null);
+            }
+
 
             /*if(object.getType().equalsIgnoreCase("platform")){
                 graphics.setColor(Color.RED);
@@ -42,6 +47,8 @@ public class Level {
         graphics.drawImage(player.getCurrentFrame(), player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height, null);
 
         gameObjectList.removeAll(toDelete);
+
+        player.drawPlayerUI(this, graphics);
     }
 
     private List<GameObject> toDelete = new ArrayList<>();
@@ -55,5 +62,15 @@ public class Level {
                 System.out.println("Concurrent in Level.java");
             }
         }
+    }
+
+    int countAllCoinsOnLevel(){
+        int coins = 0;
+        for(GameObject object : gameObjectList){
+            if(object.getType().equalsIgnoreCase("coin")){
+                coins++;
+            }
+        }
+        return coins;
     }
 }

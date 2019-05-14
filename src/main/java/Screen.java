@@ -59,6 +59,9 @@ public class Screen {
             case "upgrade":
                 drawUpgrade();
                 break;
+            default:
+                System.out.println("Have not yet created function for: " + whatScreen);
+                break;
         }
     }
 
@@ -113,7 +116,7 @@ public class Screen {
 
         Graphics2D graphics = getGraphics();
 
-        String[] names = {"New Game", "Start", "Settings", "Controls", "Worlds", "Store", "Credits", "Exit"};
+        String[] names = {"New Game", "Continue", "Settings", "Controls", "Worlds", "Store", "Credits", "Exit"};
 
         //graphics.setColor(Color.red);
         graphics.drawLine(halfScreenX,0,halfScreenX,screenY);

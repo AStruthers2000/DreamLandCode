@@ -76,7 +76,7 @@ public class FrameHandler extends JPanel {
                         case "New Game":
                             System.out.println("Creating new game!!!");
                             break;
-                        case "Start":
+                        case "Continue":
                             System.out.println("Starting game!");
                             whatScreen = "game";
                             break;
