@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,30 +83,37 @@ public class LevelHandler {
                         imagePath = type;
                     }
 
+                    Color objectColor = Color.BLACK;
                     switch (type) {
                         case "player":
                             DreamLand.game.getPlayer().setX(x);
                             DreamLand.game.getPlayer().setY(y);
                             break;
                         case "platform":
-                            gameObjectList.add(new Platform(x, y, width, height, imagePath));
+                            objectColor = Color.ORANGE;
+                            //gameObjectList.add(new Platform(x, y, width, height, imagePath));
                             break;
                         case "floor":
-                            gameObjectList.add(new Floor(x, y, width, height, imagePath));
+                            objectColor = Color.GRAY;
+                            //gameObjectList.add(new Floor(x, y, width, height, imagePath));
                             break;
                         case "ladder":
-                            gameObjectList.add(new Ladder(x, y, width, height, imagePath));
+                            objectColor = Color.BLUE;
+                            //gameObjectList.add(new Ladder(x, y, width, height, imagePath));
                             break;
                         case "door":
-                            gameObjectList.add(new Door(x, y, width, height, imagePath));
+                            objectColor = Color.CYAN;
+                            //gameObjectList.add(new Door(x, y, width, height, imagePath));
                             break;
                         case "coin":
-                            gameObjectList.add(new Coin(x, y, width, height,imagePath));
+                            objectColor = Color.YELLOW;
+                            //gameObjectList.add(new Coin(x, y, width, height,imagePath));
                             break;
                         default:
                             System.out.println("Cant find type: " + type);
                             break;
                     }
+                    gameObjectList.add(new GameObject(type, x, y, width, height, objectColor, imagePath));
                 }
             }
 

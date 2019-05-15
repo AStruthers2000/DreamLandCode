@@ -12,6 +12,21 @@ public class GameObject {
     private BufferedImage objectImage;
     private String fullPath = System.getProperty("user.dir") + "\\Sprites\\LevelSprites\\";
 
+    GameObject(String type, int x, int y, int width, int height, Color color, String imagePath){
+        this.setType(type);
+        Rectangle object = new Rectangle(x, y, width, height);
+        this.setItem(object);
+        this.setObjectColor(color);
+
+        try{
+            BufferedImage image = ImageIO.read(new File(this.getFullPath() + imagePath));
+            this.setObjectImage(image);
+        }catch (IOException e){
+            System.out.println("Can't load image file for: " + imagePath);
+            this.setObjectImage(null);
+        }
+    }
+
     String getType() {
         return this.type;
     }
@@ -82,129 +97,5 @@ public class GameObject {
 
     public String toString() {
         return "GameObject: " + getType();
-    }
-}
-
-class Ladder extends GameObject {
-    private int x, y, width, height;
-
-    Ladder(int x, int y, int width, int height, String imagePath) {
-        super.setType("ladder");
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height= height;
-
-        Rectangle ladder = new Rectangle(this.x, this.y, this.width, this.height);
-        super.setItem(ladder);
-        super.setObjectColor(Color.BLUE);
-
-        try{
-            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
-            super.setObjectImage(image);
-        }catch (IOException e){
-            System.out.println("Can't load file: " + imagePath);
-            super.setObjectImage(null);
-        }
-    }
-
-}
-
-class Platform extends GameObject {
-    int x, y, width, height;
-
-    Platform(int x, int y, int width, int height, String imagePath) {
-        super.setType("platform");
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
-        super.setItem(platform);
-        super.setObjectColor(Color.ORANGE);
-
-        try{
-            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
-            super.setObjectImage(image);
-        }catch (IOException e){
-            System.out.println("Can't load file: " + imagePath);
-            super.setObjectImage(null);
-        }
-    }
-}
-
-class Floor extends GameObject{
-    int x, y, width, height;
-
-    Floor(int x, int y, int width, int height, String imagePath) {
-        super.setType("platform");
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        Rectangle platform = new Rectangle(this.x, this.y, this.width, this.height);
-        super.setItem(platform);
-        super.setObjectColor(Color.GRAY);
-
-        try{
-            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
-            super.setObjectImage(image);
-        }catch (IOException e){
-            System.out.println("Can't load file: " + imagePath);
-            super.setObjectImage(null);
-        }
-    }
-}
-
-class Door extends GameObject {
-    int x, y, width, height;
-
-    Door(int x, int y, int width, int height, String imagePath) {
-        super.setType("door");
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-
-        Rectangle door = new Rectangle(this.x, this.y, this.width, this.height);
-        super.setItem(door);
-        super.setObjectColor(Color.CYAN);
-
-        try{
-            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
-            super.setObjectImage(image);
-        }catch (IOException e){
-            System.out.println("Can't load file: " + imagePath);
-            super.setObjectImage(null);
-        }
-    }
-}
-
-class Coin extends GameObject {
-    int x, y, width, height;
-
-    Coin(int x, int y, int width, int height, String imagePath) {
-        super.setType("coin");
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-
-        Rectangle coin = new Rectangle(this.x, this.y, this.width, this.height);
-        super.setItem(coin);
-        super.setObjectColor(Color.YELLOW);
-
-        try{
-            BufferedImage image = ImageIO.read(new File(super.getFullPath() + imagePath));
-            super.setObjectImage(image);
-        }catch (IOException e){
-            System.out.println("Can't load file: " + imagePath);
-            super.setObjectImage(null);
-        }
     }
 }

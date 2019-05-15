@@ -33,6 +33,7 @@ public class Player {
 
     private int coins;
     private int coinsOnLevel;
+    private int itemsOnLevel;
 
     private int worldNum;
     private int levelNum;
@@ -285,6 +286,7 @@ public class Player {
             if (object.getType().equalsIgnoreCase("coin")) {
                 if (getBody().intersects(object.getItem())) {
                     this.coinsOnLevel += 1;
+                    this.itemsOnLevel += 1;
                     currentLevel.objectDelete(object);
                 }
             } //coin
@@ -293,6 +295,8 @@ public class Player {
                 if(getBody().intersects(object.getItem())){
                     this.coins += this.coinsOnLevel;
                     this.coinsOnLevel = 0;
+                    this.itemsOnLevel = 0;
+
                     this.levelNum += 1;
 
                     StringBuilder worldName = new StringBuilder("World");
@@ -342,7 +346,7 @@ public class Player {
 
         graphics.drawRect(screenX - 401, screenY - 101, 400, 100); //Percent complete button
 
-        graphics.drawImage(coin, x, y - 30, 20, 20, null); //Coins on level counter TODO change to drawImage of coinImage
+        graphics.drawImage(coin, x, y - 30, 20, 20, null); //Coins on level counter
 
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("verdana", Font.ITALIC, 40));
@@ -353,7 +357,7 @@ public class Player {
         graphics.drawImage(coin, 205, 25, 50, 50, null); //coin image
         graphics.drawString(String.valueOf("x " + coins), 275, 65); //total coins
 
-        graphics.drawString(String.valueOf(coinsOnLevel + "/" + (currentLevel.countAllCoinsOnLevel() + coinsOnLevel) + " coins collected"), screenX - 500, screenY - 40);
+        graphics.drawString(String.valueOf(itemsOnLevel + "/" + (currentLevel.countAllItemsOnLevel() + itemsOnLevel) + " items collected"), screenX - 500, screenY - 40);
 
         graphics.setFont(new Font("verdana", Font.PLAIN, 20));
         graphics.drawString(String.valueOf("x " + coinsOnLevel), x + 25, y - 12); //CoinsOnLevel string

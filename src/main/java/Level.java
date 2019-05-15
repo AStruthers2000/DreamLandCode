@@ -64,13 +64,21 @@ public class Level {
         }
     }
 
-    int countAllCoinsOnLevel(){
-        int coins = 0;
+    int countAllItemsOnLevel(){
+        int items = 0;
         for(GameObject object : gameObjectList){
-            if(object.getType().equalsIgnoreCase("coin")){
-                coins++;
+            String type = object.getType();
+            switch (type){
+                case "coin":
+                    items++;
+                    break;
+                case "heart":
+                    items++;
+                    break;
+                default:
+                    break;
             }
         }
-        return coins;
+        return items;
     }
 }
