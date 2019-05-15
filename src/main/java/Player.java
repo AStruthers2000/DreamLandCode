@@ -358,5 +358,7 @@ public class Player {
         graphics.setFont(new Font("verdana", Font.PLAIN, 20));
         graphics.drawString(String.valueOf("x " + coinsOnLevel), x + 25, y - 12); //CoinsOnLevel string
 
+        //Keep working on the UI
+
     }
 }
