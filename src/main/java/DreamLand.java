@@ -8,11 +8,14 @@ public class DreamLand {
 
     private Player player;
     private FrameHandler frameHandler;
+    private Camera camera;
     private LevelHandler levelHandler;
     private static Map<String, List<String>> worldNames;
 
     private int screenX;
     private int screenY;
+
+    private int objectMultiplier;
 
     protected Player getPlayer() {
         return this.player;
@@ -29,6 +32,10 @@ public class DreamLand {
         return this.levelHandler;
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
     protected Map<String, List<String>> getWorldNames(){
         return this.worldNames;
     }
@@ -39,6 +46,10 @@ public class DreamLand {
 
     protected int getScreenY() {
         return this.screenY;
+    }
+
+    protected int getObjectMultiplier(){
+        return this.objectMultiplier;
     }
 
     List<GameObject> loadLevel(){
@@ -62,9 +73,13 @@ public class DreamLand {
 
         screenX = Toolkit.getDefaultToolkit().getScreenSize().width;
         screenY = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        objectMultiplier = 1;
     } //Constructor
 
     private void run() {
+        camera = new Camera();
+
         Thread playerThread = new Thread(Player::new);
         playerThread.start();
 

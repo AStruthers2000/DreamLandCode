@@ -21,16 +21,27 @@ public class Level {
     }
 
     void drawLevel(Graphics2D graphics) {
+        int multiplier = DreamLand.game.getObjectMultiplier();
+
+        int xOffset = DreamLand.game.getCamera().getxOffset();
+        int yOffset = DreamLand.game.getCamera().getyOffset();
+        System.out.println(xOffset);
+        System.out.println(yOffset);
+
         player = DreamLand.game.getPlayer();
 
         for (GameObject object : gameObjectList) {
             if (object.getObjectImage() == null) {
                 graphics.setColor(object.getObjectColor());
-                graphics.fillRect(object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height);
+                graphics.fillRect(object.getItem().x * multiplier, object.getItem().y * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
+
             } else {
-                graphics.drawImage(object.getObjectImage(), object.getItem().x, object.getItem().y, object.getItem().width, object.getItem().height, null);
+                graphics.drawImage(object.getObjectImage(), object.getItem().x * multiplier, object.getItem().y * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier, null);
             }
 
+            //System.out.println("Object: " + object.getType() + " X: " + String.valueOf(object.getItem().x * multiplier) + ", Y: " + String.valueOf(object.getItem().y * multiplier));
+            //Rectangle newObjectItem = new Rectangle((object.getItem().x + xOffset) * multiplier, (object.getItem().y + yOffset) * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
+            //object.setItem(newObjectItem);
 
             /*if(object.getType().equalsIgnoreCase("platform")){
                 graphics.setColor(Color.RED);
@@ -39,16 +50,27 @@ public class Level {
                 graphics.drawRect(object.getLeftBound().x, object.getLeftBound().y, object.getLeftBound().width, object.getLeftBound().height);
                 graphics.drawRect(object.getRightBound().x, object.getRightBound().y, object.getRightBound().width, object.getRightBound().height);
             }*/
+
+            graphics.setColor(Color.WHITE);
+            Rectangle playerCam = DreamLand.game.getCamera().cameraBox;
+            graphics.drawRect(playerCam.x, playerCam.y, playerCam.width, playerCam.height);
         }
 
         player.move(this, getGameObjectList());
         graphics.setColor(Color.WHITE);
         //graphics.fillRect(player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height);
-        graphics.drawImage(player.getCurrentFrame(), player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height, null);
+        graphics.drawImage(player.getCurrentFrame(), player.getBody().x * multiplier, player.getBody().y * multiplier, player.getBody().width * multiplier, player.getBody().height * multiplier, null);
 
         gameObjectList.removeAll(toDelete);
 
         player.drawPlayerUI(this, graphics);
+    }
+
+    void moveObjects(int x, int y) {
+        for (GameObject object : gameObjectList) {
+            Rectangle item = object.getItem();
+            object.setItem(new Rectangle(item.x + x, item.y + y, item.width, item.height));
+        }
     }
 
     private List<GameObject> toDelete = new ArrayList<>();

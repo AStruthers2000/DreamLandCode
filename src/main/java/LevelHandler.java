@@ -95,6 +95,7 @@ public class LevelHandler {
                             break;
                         case "floor":
                             objectColor = Color.GRAY;
+                            type = "platform"; //floors are just fancy and big platforms
                             //gameObjectList.add(new Floor(x, y, width, height, imagePath));
                             break;
                         case "ladder":
@@ -122,6 +123,8 @@ public class LevelHandler {
         } catch (IOException e) {
             System.out.println("Can't read line in file: " + longPathName);
         }
+
+        DreamLand.game.getCamera().calcLevelLoadOffset(gameObjectList);
 
         return gameObjectList;
     } //generateLevel

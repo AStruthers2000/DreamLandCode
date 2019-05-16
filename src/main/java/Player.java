@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class Player {
-
     private int sizeX, sizeY;
     private int x, y;
     private int xa, ya;
@@ -30,6 +29,7 @@ public class Player {
     private boolean onLadder;
     private boolean hittingLeftSide;
     private boolean hittingRightSide;
+    private boolean hittingCameraBox;
 
     private int coins;
     private int coinsOnLevel;
@@ -78,6 +78,7 @@ public class Player {
         this.onLadder = false;
         this.hittingLeftSide = false;
         this.hittingRightSide = false;
+        this.hittingCameraBox = false;
 
         this.coins = 0;
         this.coinsOnLevel = 0;
@@ -127,20 +128,52 @@ public class Player {
         return frames[frame];
     }
 
+    int getX(){
+        return this.x;
+    }
+
     void setX(int x){
         this.x = x;
+    }
+
+    int getY(){
+        return this.y;
     }
 
     void setY(int y){
         this.y = y;
     }
 
+    int getXa(){
+        return this.xa;
+    }
+
     void setXa(int xa) {
         this.xa = xa;
     }
 
+    int getYa(){
+        return this.ya;
+    }
+
     void setYa(int ya) {
         this.ya = ya;
+    }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public void setSizeX(int sizeX) {
+        this.sizeX = sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
+
+    public void setSizeY(int sizeY) {
+        this.sizeY = sizeY;
     }
 
     int getSpeed() {
@@ -184,9 +217,10 @@ public class Player {
     }
 
     void move(Level currentLevel, List<GameObject> gameObjectList) {
-        if (!hittingLeftSide && !hittingRightSide) {
-            this.x += this.xa;
-        }
+        hittingCameraBox = false;
+
+        Camera playerCamera = DreamLand.game.getCamera();
+
 
         if (this.isJumping && canJump) {
             this.y -= jumpSpeed;
@@ -205,10 +239,33 @@ public class Player {
             }
         }
 
+        Rectangle nextBody = new Rectangle(getBody().x + xa, getBody().y + gravity + ya, getBody().width, getBody().height);
+        if(nextBody.intersects(playerCamera.getLeftBound())){
+            currentLevel.moveObjects(speed, 0);
+            hittingCameraBox = true;
+            //this.x += 1;
+        }
+        if(nextBody.intersects(playerCamera.getRightBound())){
+            currentLevel.moveObjects(-speed, 0);
+            hittingCameraBox = true;
+            //this.x -= 1;
+        }
+        if(nextBody.intersects(playerCamera.getUpBound())){
+            currentLevel.moveObjects(0, speed);
+            hittingCameraBox = true;
+        }
+        if(nextBody.intersects(playerCamera.getDownBound())){
+            currentLevel.moveObjects(0, -gravity);
+            hittingCameraBox = true;
+        }
+
+        if (!hittingLeftSide && !hittingRightSide) {
+            if(!hittingCameraBox){
+                this.x += this.xa;
+            }
+        }
         boolean currentlyOnPlatform = false;
         boolean currentlyOnLadder = false;
-
-        Rectangle nextBody = new Rectangle(getBody().x + xa, getBody().y + gravity + ya, getBody().width, getBody().height);
 
         for (GameObject object : gameObjectList) {
             if (object.getType().equalsIgnoreCase("platform")) {
@@ -316,6 +373,7 @@ public class Player {
                     }
                     //DreamLand.game.getLevelHandler().setGameObjectList(DreamLand.game.loadLevel().getGameObjectList());
                     currentLevel.setGameObjectList(DreamLand.game.loadLevel());
+                    //DreamLand.game.getCamera().calcLevelLoadOffset();
                 }
             }
         }
