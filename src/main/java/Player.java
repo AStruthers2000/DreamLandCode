@@ -188,6 +188,10 @@ public class Player {
         this.hittingRightSide = hittingRightSide;
     }
 
+    public boolean getOnPlatform() {
+        return onPlatform;
+    }
+
     boolean getOnLadder() {
         return this.onLadder;
     }
@@ -219,9 +223,6 @@ public class Player {
     void move(Level currentLevel, List<GameObject> gameObjectList) {
         hittingCameraBox = false;
 
-        Camera playerCamera = DreamLand.game.getCamera();
-
-
         if (this.isJumping && canJump) {
             this.y -= jumpSpeed;
             jumpRaise += jumpSpeed;
@@ -240,23 +241,14 @@ public class Player {
         }
 
         Rectangle nextBody = new Rectangle(getBody().x + xa, getBody().y + gravity + ya, getBody().width, getBody().height);
-        if(nextBody.intersects(playerCamera.getLeftBound())){
+
+        if(nextBody.x < DreamLand.game.getScreenX()/2-200){
+            hittingCameraBox = true;
             currentLevel.moveObjects(speed, 0);
-            hittingCameraBox = true;
-            //this.x += 1;
         }
-        if(nextBody.intersects(playerCamera.getRightBound())){
+        if(nextBody.x + nextBody.width > DreamLand.game.getScreenX()/2+200){
+            hittingCameraBox = true;
             currentLevel.moveObjects(-speed, 0);
-            hittingCameraBox = true;
-            //this.x -= 1;
-        }
-        if(nextBody.intersects(playerCamera.getUpBound())){
-            currentLevel.moveObjects(0, speed);
-            hittingCameraBox = true;
-        }
-        if(nextBody.intersects(playerCamera.getDownBound())){
-            currentLevel.moveObjects(0, -gravity);
-            hittingCameraBox = true;
         }
 
         if (!hittingLeftSide && !hittingRightSide) {
@@ -333,7 +325,11 @@ public class Player {
             if (object.getType().equalsIgnoreCase("ladder")) {
                 if (getBody().intersects(object.getItem())) {
                     currentlyOnLadder = true;
-                    this.y += this.ya;
+                    if(!currentlyOnPlatform){
+                        this.y += this.ya;
+                    }else{
+                        this.ya = 0;
+                    }
                     this.gravity = 2;
                     this.onLadder = true;
                     this.canJump = true;
@@ -376,6 +372,13 @@ public class Player {
                     //DreamLand.game.getCamera().calcLevelLoadOffset();
                 }
             }
+        }
+
+        if(nextBody.y < DreamLand.game.getScreenY()/2-250){
+            currentLevel.moveObjects(0, ya + speed);
+        }
+        if(nextBody.y + nextBody.height > DreamLand.game.getScreenY()/2+100){
+            currentLevel.moveObjects(0, -speed - ya);
         }
 
         if (!currentlyOnPlatform) {

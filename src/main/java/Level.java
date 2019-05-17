@@ -24,24 +24,24 @@ public class Level {
         int multiplier = DreamLand.game.getObjectMultiplier();
 
         int xOffset = DreamLand.game.getCamera().getxOffset();
-        int yOffset = DreamLand.game.getCamera().getyOffset();
-        System.out.println(xOffset);
-        System.out.println(yOffset);
+        int yOffset = -1 * DreamLand.game.getPlayer().getYa();
+        //System.out.println(xOffset);
+        //System.out.println(yOffset);
 
         player = DreamLand.game.getPlayer();
 
         for (GameObject object : gameObjectList) {
             if (object.getObjectImage() == null) {
                 graphics.setColor(object.getObjectColor());
-                graphics.fillRect(object.getItem().x * multiplier, object.getItem().y * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
+                graphics.fillRect(object.getItem().x * multiplier, (object.getItem().y + yOffset) * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
 
             } else {
-                graphics.drawImage(object.getObjectImage(), object.getItem().x * multiplier, object.getItem().y * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier, null);
+                graphics.drawImage(object.getObjectImage(), object.getItem().x * multiplier, (object.getItem().y + yOffset) * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier, null);
             }
 
             //System.out.println("Object: " + object.getType() + " X: " + String.valueOf(object.getItem().x * multiplier) + ", Y: " + String.valueOf(object.getItem().y * multiplier));
-            //Rectangle newObjectItem = new Rectangle((object.getItem().x + xOffset) * multiplier, (object.getItem().y + yOffset) * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
-            //object.setItem(newObjectItem);
+            Rectangle newObjectItem = new Rectangle(object.getItem().x * multiplier, (object.getItem().y + yOffset) * multiplier, object.getItem().width * multiplier, object.getItem().height * multiplier);
+            object.setItem(newObjectItem);
 
             /*if(object.getType().equalsIgnoreCase("platform")){
                 graphics.setColor(Color.RED);
@@ -58,8 +58,8 @@ public class Level {
 
         player.move(this, getGameObjectList());
         graphics.setColor(Color.WHITE);
-        //graphics.fillRect(player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height);
-        graphics.drawImage(player.getCurrentFrame(), player.getBody().x * multiplier, player.getBody().y * multiplier, player.getBody().width * multiplier, player.getBody().height * multiplier, null);
+        graphics.fillRect(player.getBody().x, player.getBody().y, player.getBody().width, player.getBody().height);
+        //graphics.drawImage(player.getCurrentFrame(), player.getBody().x * multiplier, player.getBody().y * multiplier, player.getBody().width * multiplier, player.getBody().height * multiplier, null);
 
         gameObjectList.removeAll(toDelete);
 

@@ -157,13 +157,13 @@ public class FrameHandler extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    if (DreamLand.game.getPlayer().getOnLadder()) {
-                        DreamLand.game.getPlayer().setYa(DreamLand.game.getPlayer().getSpeed());
+                    if (DreamLand.game.getPlayer().getOnLadder() || !DreamLand.game.getPlayer().getOnPlatform()) {
+                        DreamLand.game.getPlayer().setYa(DreamLand.game.getPlayer().getSpeed()/2);
                     }
                 }
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    if (DreamLand.game.getPlayer().getOnLadder()) {
-                        DreamLand.game.getPlayer().setYa(-DreamLand.game.getPlayer().getSpeed());
+                    if (DreamLand.game.getPlayer().getOnLadder() || !DreamLand.game.getPlayer().getOnPlatform()) {
+                        DreamLand.game.getPlayer().setYa(-DreamLand.game.getPlayer().getSpeed()/2);
                     }
                 }
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
